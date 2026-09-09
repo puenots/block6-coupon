@@ -361,7 +361,7 @@
     <div class="rule"></div>
 
     <section class="event" aria-label="イベント情報">
-      <div class="event-date">2026 / <span class="accent">9 / 26</span> (SAT)</div>
+      <div class="event-date" id="event-date">2026 / <span class="accent">9 / 26</span> (SAT)</div>
       <div class="event-meta">OPEN 18:00 – LATE NIGHT @ Boogie54 Yokohama<br><a href="https://www.google.com/maps/search/?api=1&query=%E6%A8%AA%E6%B5%9C%E5%B8%82%E4%B8%AD%E5%8C%BA%E9%95%B7%E8%80%85%E7%94%BA6-111" target="_blank" rel="noopener">📍 横浜市中区長者町6-111 B1F</a></div>
       <div class="event-door">DOOR ¥2,500 ／ <span class="accent">20代エントランスフリー</span></div>
       <div class="lineup">
@@ -387,29 +387,70 @@
   (function () {
     var subEl = document.getElementById("cd-sub");
     var mainEl = document.getElementById("cd-main");
-    var START = new Date("2026-09-26T18:00:00+09:00").getTime();
-    var END = new Date("2026-09-27T06:00:00+09:00").getTime();
+    var ticketEl = document.getElementById("ticket-date");
+    var eventEl = document.getElementById("event-date");
 
+    // BLOCK6 は奇数月の第4土曜。開催が終わったら(翌朝6:00)次回に自動で切り替わる。
+    // 例外日程があれば OVERRIDES に "YYYY-MM-DD" を足す(その月の規則日より優先)。
+    var OVERRIDES = [];
+    var START_H = 18, END_H = 6; // 18:00 開始・翌 06:00 終了 (JST)
+
+    function jst(y, m, d, h) { // m: 1-12
+      return new Date(Date.UTC(y, m - 1, d, h - 9, 0, 0)).getTime();
+    }
+    function fourthSaturday(y, m) {
+      var dow = new Date(Date.UTC(y, m - 1, 1)).getUTCDay(); // 0=Sun
+      var first = 1 + ((6 - dow) + 7) % 7;
+      return first + 21;
+    }
+    function ruleDate(y, m) {
+      for (var i = 0; i < OVERRIDES.length; i++) {
+        var o = OVERRIDES[i].split("-");
+        if (+o[0] === y && +o[1] === m) return +o[2];
+      }
+      return fourthSaturday(y, m);
+    }
+    function nextEvent(now) {
+      var d = new Date(now + 9 * 3600000);
+      var y = d.getUTCFullYear(), m = d.getUTCMonth() + 1;
+      if (m % 2 === 0) { m += 1; if (m > 12) { m = 1; y += 1; } }
+      for (var k = 0; k < 12; k++) {
+        var day = ruleDate(y, m);
+        var start = jst(y, m, day, START_H);
+        var end = jst(y, m, day + 1, END_H);
+        if (now < end) return { y: y, m: m, d: day, start: start, end: end };
+        m += 2; if (m > 12) { m -= 12; y += 1; }
+      }
+    }
+    function dowLabel(y, m, d) {
+      return ["SUN","MON","TUE","WED","THU","FRI","SAT"][new Date(Date.UTC(y, m - 1, d)).getUTCDay()];
+    }
     function pad(n) { return n < 10 ? "0" + n : "" + n; }
+
+    var ev = null;
+    function applyEvent(e) {
+      ev = e;
+      var w = dowLabel(e.y, e.m, e.d);
+      if (ticketEl) ticketEl.textContent = e.y + "." + e.m + "." + e.d + " (" + w + ")";
+      if (eventEl) eventEl.innerHTML = e.y + " / <span class=\"accent\">" + e.m + " / " + e.d + "</span> (" + w + ")";
+    }
 
     function update() {
       if (!subEl || !mainEl) return;
       var now = Date.now();
-      if (now >= END) {
-        subEl.textContent = "9/26 (SAT) @ Boogie54 Yokohama";
-        mainEl.textContent = "終了しました";
-        mainEl.classList.remove("live");
-      } else if (now >= START) {
-        subEl.textContent = "9/26 (SAT) 18:00 – Late";
+      if (!ev || now >= ev.end) applyEvent(nextEvent(now));
+      var label = ev.m + "/" + ev.d + " (" + dowLabel(ev.y, ev.m, ev.d) + ")";
+      if (now >= ev.start) {
+        subEl.textContent = label + " 18:00 – Late";
         mainEl.textContent = "いま開催中！";
         mainEl.classList.add("live");
       } else {
-        var ms = START - now;
+        var ms = ev.start - now;
         var d = Math.floor(ms / 86400000);
         var h = Math.floor((ms % 86400000) / 3600000);
         var m = Math.floor((ms % 3600000) / 60000);
         var s = Math.floor((ms % 60000) / 1000);
-        subEl.textContent = "9/26 (SAT) 18:00 スタート";
+        subEl.textContent = label + " 18:00 スタート";
         mainEl.textContent = (d > 0 ? d + "日 " : "") + pad(h) + ":" + pad(m) + ":" + pad(s);
         mainEl.classList.remove("live");
       }
