@@ -30,7 +30,7 @@ sed \
  -e 's|--ticket-b: #e6b900;|--ticket-b: #2391d6;|' \
  -e 's|<div class="coupon-value">¥2,000</div>|<div class="coupon-value">¥1,000</div>|' \
  -e 's|aria-label="ディスカウントパス">|aria-label="関係者パス">|' \
- -e 's|<div class="coupon-tag"></div>|<div class="coupon-tag">関係者専用</div>|' \
+ -e 's|<div class="coupon-tag"></div>|<div class="coupon-tag">音楽関係者専用</div>|' \
  -e 's@BLOCK6 | DISCOUNT PASS ¥2,500 → ¥2,000@BLOCK6 | GUEST PASS ¥2,500 → ¥1,000@' \
  _template_discount.html > _template_artist.html
 echo "wrote  _template_artist.html"
@@ -73,7 +73,7 @@ trap 'rm -f "$disc_map" "$artist_map" "$free_map"' EXIT
 
 # 人数注記。空文字なら .coupon-group:empty で非表示になる。
 GROUP_NOTE_DISCOUNT=""
-GROUP_NOTE_ARTIST="1枚で5名まで有効"
+GROUP_NOTE_ARTIST="1枚で3名まで有効"
 GROUP_NOTE_FREE="1枚で3名まで有効"
 
 # リストバンド注記（チケット地色と同じ色のバンドを受付で渡す）。空文字なら .coupon-band:empty で非表示。
