@@ -18,6 +18,8 @@
 | FU-SE | https://block6.djue.me/fuse/ |
 | yunkmr | https://block6.djue.me/yunkmr/ |
 | YUUKI | https://block6.djue.me/yuuki/ |
+| KAZUKI | https://block6.djue.me/kazuki/ |
+| KOUICHI | https://block6.djue.me/kouichi/ |
 
 **関係者（ブルー・¥2,500 → ¥1,000・1枚で5名まで）:**
 
@@ -30,6 +32,8 @@
 | FU-SE | https://block6.djue.me/fuse-sp/ |
 | yunkmr | https://block6.djue.me/yunkmr-sp/ |
 | YUUKI | https://block6.djue.me/yuuki-sp/ |
+| KAZUKI | https://block6.djue.me/kazuki-sp/ |
+| KOUICHI | https://block6.djue.me/kouichi-sp/ |
 
 **フリー（ピンク・FREE・音楽関係者のみ・1枚で3名まで）:**
 

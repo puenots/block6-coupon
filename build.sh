@@ -19,7 +19,7 @@ BASE_URL="https://block6.djue.me"
 GA4_ID="G-4N9ENSKWVH"
 
 # "表示名|スラッグ"
-DJS=("UE|ue" "P-KI|pki" "FUMIYA|fumiya" "なおと↯まふぃあ|naoto" "FU-SE|fuse" "yunkmr|yunkmr" "YUUKI|yuuki")
+DJS=("UE|ue" "P-KI|pki" "FUMIYA|fumiya" "なおと↯まふぃあ|naoto" "FU-SE|fuse" "yunkmr|yunkmr" "YUUKI|yuuki" "KAZUKI|kazuki" "KOUICHI|kouichi")
 FREE_DJS=("UE|ue")
 
 # _template_artist.html を discount 版から派生させる
