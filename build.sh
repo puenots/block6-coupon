@@ -48,13 +48,16 @@ sed \
  _template_discount.html > _template_free.html
 echo "wrote  _template_free.html"
 
-# ルートページ: パス・招待セクションを除いたイベント案内（カウントダウンは残す）
+# ルートページ: パス・招待・カウントダウンを除いたイベント案内(09-13 keiju「カウントダウンいらない」)。LINKS欄(_links.html: Mixcloud/IG/会場/パス案内)はルートだけに入れる
 sed \
  -e 's|<title>BLOCK6 — DISCOUNT PASS{{TITLE_SUFFIX}}</title>|<title>BLOCK6 — 9/26 (SAT) @ Boogie54 Yokohama</title>|' \
- -e 's|<div class="subtitle">Discount Pass</div>|<div class="subtitle">Boogie54 Yokohama</div>|' \
+ -e 's|<div class="subtitle">Discount Pass</div>|<div class="subtitle">@ Boogie54 Yokohama</div>|' \
  -e 's#BLOCK6 | DISCOUNT PASS ¥2,500 → ¥2,000#BLOCK6 | 9/26 (SAT) @ Boogie54 Yokohama#' \
  -e '/<section class="invited"/,/<\/section>/d' \
  -e '/<section class="coupon"/,/<\/section>/d' \
+ -e '/rule-after-pass/d' \
+ -e '/rule-after-clock/d' \
+ -e '/<section class="clock"/,/<\/section>/d' \
  -e "s|{{GA4_ID}}|${GA4_ID}|g" \
  -e "s|{{BASE_URL}}|${BASE_URL}|g" \
  -e "s|{{OG_IMAGE}}|${BASE_URL}/ogp.jpg|g" \
@@ -62,6 +65,7 @@ sed \
  -e 's|{{GROUP_NOTE}}||g' \
  -e 's|{{BAND_NOTE}}||g' \
  -e 's|{{NAME_CLASS}}||g' \
+ -e '/{{LINKS}}/{' -e 'r _links.html' -e 'd' -e '}' \
  _template_discount.html > index.html
 echo "wrote  index.html"
 
@@ -105,6 +109,7 @@ generate() {
       -e 's|{{LOGO_SRC}}|../logo.png|g' \
       -e "s|{{GROUP_NOTE}}|${group_note}|g" \
       -e "s|{{BAND_NOTE}}|${band_note}|g" \
+      -e '/{{LINKS}}/d' \
       "$template" > "${dir}/index.html"
   echo "wrote  ${dir}/index.html"
 }

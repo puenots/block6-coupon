@@ -329,6 +329,53 @@
     line-height: 1.8;
   }
 
+
+  .links {
+    width: 100%;
+    margin-top: 6px;
+  }
+  .links .label { margin-bottom: 10px; }
+  .link-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+    margin-top: 10px;
+    padding: 13px 16px;
+    border: 1px solid var(--hairline);
+    border-radius: 12px;
+    color: var(--cream);
+    text-decoration: none;
+    text-align: left;
+    background: rgba(255, 255, 255, 0.03);
+    transition: background .15s, border-color .15s;
+  }
+  .link-btn:hover, .link-btn:active { background: rgba(205, 223, 15, 0.12); border-color: var(--lime-2); }
+  .link-btn.primary { border-color: var(--lime-2); background: rgba(205, 223, 15, 0.10); }
+  .link-main {
+    font-family: "Anton", sans-serif;
+    font-size: 15px;
+    letter-spacing: 1.5px;
+    line-height: 1.2;
+  }
+  .link-sub {
+    font-family: "DM Sans", "Noto Sans JP", sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    color: var(--cream-dim);
+    margin-top: 3px;
+  }
+  .link-arrow { color: var(--lime-2); font-size: 16px; flex: none; }
+  .pass-note {
+    font-family: "Noto Sans JP", sans-serif;
+    font-size: 11.5px;
+    line-height: 1.8;
+    color: var(--cream-dim);
+    margin: 14px 0 0;
+  }
+  .pass-note b { color: var(--cream); font-weight: 700; }
+
   .tagline {
     font-family: "DM Sans", sans-serif;
     font-weight: 500;
@@ -345,20 +392,13 @@
 <body>
   <main class="wrap">
     <h1 class="title"><img class="logo" src="logo.png" alt="BLOCK6"></h1>
-    <div class="subtitle">Boogie54 Yokohama</div>
+    <div class="subtitle">@ Boogie54 Yokohama</div>
 
     <div class="rule"></div>
 
 
-    <div class="rule"></div>
 
-    <section class="clock" aria-label="カウントダウン">
-      <div class="label">Countdown</div>
-      <div class="clock-time" id="cd-main">--</div>
-      <div class="clock-date" id="cd-sub">—</div>
-    </section>
 
-    <div class="rule"></div>
 
     <section class="event" aria-label="イベント情報">
       <div class="event-date" id="event-date">2026 / <span class="accent">9 / 26</span> (SAT)</div>
@@ -380,6 +420,24 @@
       </div>
     </section>
 
+    <div class="rule"></div>
+
+    <section class="links" aria-label="リンク">
+      <div class="label">Links</div>
+      <a class="link-btn primary" href="https://www.mixcloud.com/djue/block6-party-mixdj-ue-p-ki-%E3%81%AA%E3%81%8A%E3%81%A8%E3%81%BE%E3%81%B5%E3%81%83%E3%81%82/" target="_blank" rel="noopener">
+        <span><span class="link-main">▶ BLOCK6 PARTY MIX</span><span class="link-sub" style="display:block">DJ UE / P-KI / なおと↯まふぃあ — Mixcloud</span></span>
+        <span class="link-arrow">→</span>
+      </a>
+      <a class="link-btn" href="https://www.instagram.com/block6_boogie54/" target="_blank" rel="noopener">
+        <span><span class="link-main">INSTAGRAM</span><span class="link-sub" style="display:block">@block6_boogie54 — パーティーの写真・次回告知</span></span>
+        <span class="link-arrow">→</span>
+      </a>
+      <a class="link-btn" href="https://www.instagram.com/boogie54yokohama/" target="_blank" rel="noopener">
+        <span><span class="link-main">BOOGIE54 YOKOHAMA</span><span class="link-sub" style="display:block">@boogie54yokohama — 会場</span></span>
+        <span class="link-arrow">→</span>
+      </a>
+      <p class="pass-note">出演者からもらった<b>パスのURL</b>を受付で見せると割引になります。</p>
+    </section>
     <p class="tagline"><span class="star">★</span> Boogie54 Yokohama <span class="star">★</span></p>
   </main>
 
