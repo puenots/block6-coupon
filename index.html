@@ -56,11 +56,15 @@
     text-align: center;
   }
   .title { margin: 0; }
+  /* 後光は logo_glow.png に焼き込み済み(logo.png + drop-shadow 22px を Puppeteer で事前描画・余白200/750)。
+     CSS filter: drop-shadow を <img> に掛けると Instagram アプリ内ブラウザで初回描画が四角い影になるため使わない。
+     幅・負マージンは、ロゴ本体の見た目サイズ/位置が旧 min(64vw,250px) と同じになる値。 */
   .logo {
+    --lw: min(64vw, 250px);
     display: block;
-    width: min(64vw, 250px);
-    margin: 0 auto;
-    filter: drop-shadow(0 0 22px rgba(205, 223, 15, 0.25));
+    width: calc(var(--lw) * 1150 / 750);
+    max-width: none;
+    margin: calc(var(--lw) * -200 / 750) auto;
   }
   .subtitle {
     font-family: "DM Sans", sans-serif;
@@ -375,6 +379,12 @@
     margin: 14px 0 0;
   }
   .pass-note b { color: var(--cream); font-weight: 700; }
+  .pass-note .pass-link {
+    color: var(--lime-2);
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
 
   .tagline {
     font-family: "DM Sans", sans-serif;
@@ -391,7 +401,7 @@
 </head>
 <body>
   <main class="wrap">
-    <h1 class="title"><img class="logo" src="logo.png" alt="BLOCK6"></h1>
+    <h1 class="title"><img class="logo" src="logo_glow.png" alt="BLOCK6"></h1>
     <div class="subtitle">@ Boogie54 Yokohama</div>
 
     <div class="rule"></div>
@@ -436,7 +446,7 @@
         <span><span class="link-main">BOOGIE54 YOKOHAMA</span><span class="link-sub" style="display:block">@boogie54yokohama — 会場</span></span>
         <span class="link-arrow">→</span>
       </a>
-      <p class="pass-note">出演者からもらった<b>パスのURL</b>を受付で見せると割引になります。</p>
+      <p class="pass-note">出演者からもらった<a class="pass-link" href="/ue/">パス</a>を受付で見せると割引になります。</p>
     </section>
     <p class="tagline"><span class="star">★</span> Boogie54 Yokohama <span class="star">★</span></p>
   </main>
@@ -494,9 +504,9 @@
     }
 
     function update() {
-      if (!subEl || !mainEl) return;
       var now = Date.now();
       if (!ev || now >= ev.end) applyEvent(nextEvent(now));
+      if (!subEl || !mainEl) return; // ルート(カウントダウン無し)でも切符日付/開催日は更新する
       var label = ev.m + "/" + ev.d + " (" + dowLabel(ev.y, ev.m, ev.d) + ")";
       if (now >= ev.start) {
         subEl.textContent = label + " 18:00 – Late";

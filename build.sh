@@ -3,7 +3,7 @@
 # - 2000円ゲスト / イエロー (¥2,500→¥2,000)    : _template_discount.html → ${slug}/
 # - 関係者 / ブルー (¥2,500→¥1,000)            : _template_artist.html   → ${slug}-sp/
 # - フリー / ピンク (FREE・UEのみ)              : _template_free.html     → ${slug}-free/
-# - ルート (イベント案内のみ・パスなし)        : _template_discount.html から生成 → index.html
+# - ルート (案内+LINKS・パス本体なし・UEパスへのリンク): _template_discount.html から生成 → index.html
 # URLは読めるスラッグ固定（例: /ue/ と /ue-sp/）。独自ドメイン block6.djue.me で公開。
 # _template_artist.html / _template_free.html は _template_discount.html から派生生成する（正本は discount 側）。
 # チケットの地色は受付で渡すリストバンドの色と同期させている（イエロー/ブルー/ピンク。当日客=グリーンはバンドのみ）。
@@ -48,27 +48,6 @@ sed \
  _template_discount.html > _template_free.html
 echo "wrote  _template_free.html"
 
-# ルートページ: パス・招待・カウントダウンを除いたイベント案内(09-13 keiju「カウントダウンいらない」)。LINKS欄(_links.html: Mixcloud/IG/会場/パス案内)はルートだけに入れる
-sed \
- -e 's|<title>BLOCK6 — DISCOUNT PASS{{TITLE_SUFFIX}}</title>|<title>BLOCK6 — 9/26 (SAT) @ Boogie54 Yokohama</title>|' \
- -e 's|<div class="subtitle">Discount Pass</div>|<div class="subtitle">@ Boogie54 Yokohama</div>|' \
- -e 's#BLOCK6 | DISCOUNT PASS ¥2,500 → ¥2,000#BLOCK6 | 9/26 (SAT) @ Boogie54 Yokohama#' \
- -e '/<section class="invited"/,/<\/section>/d' \
- -e '/<section class="coupon"/,/<\/section>/d' \
- -e '/rule-after-pass/d' \
- -e '/rule-after-clock/d' \
- -e '/<section class="clock"/,/<\/section>/d' \
- -e "s|{{GA4_ID}}|${GA4_ID}|g" \
- -e "s|{{BASE_URL}}|${BASE_URL}|g" \
- -e "s|{{OG_IMAGE}}|${BASE_URL}/ogp.jpg|g" \
- -e 's|{{LOGO_SRC}}|logo.png|g' \
- -e 's|{{GROUP_NOTE}}||g' \
- -e 's|{{BAND_NOTE}}||g' \
- -e 's|{{NAME_CLASS}}||g' \
- -e '/{{LINKS}}/{' -e 'r _links.html' -e 'd' -e '}' \
- _template_discount.html > index.html
-echo "wrote  index.html"
-
 # (dj, slug) を1行ずつ書く一時ファイル
 disc_map=$(mktemp)
 artist_map=$(mktemp)
@@ -84,6 +63,28 @@ GROUP_NOTE_FREE="1枚で3名まで有効"
 BAND_NOTE_DISCOUNT="受付でイエローのリストバンドをお渡しします"
 BAND_NOTE_ARTIST="受付でブルーのリストバンドをお渡しします"
 BAND_NOTE_FREE="受付でピンクのリストバンドをお渡しします"
+
+# ルートページ(IG bio の飛び先): パス本体は載せない(09-15 keiju)。イベント案内+LINKS欄(_links.html: Mixcloud/IG/会場/パス案内→UEのパス /ue/ へのリンク)。
+# カウントダウンは無し(09-13 keiju「カウントダウンいらない」)
+sed \
+ -e 's|<title>BLOCK6 — DISCOUNT PASS{{TITLE_SUFFIX}}</title>|<title>BLOCK6 — 9/26 (SAT) @ Boogie54 Yokohama</title>|' \
+ -e 's|<div class="subtitle">Discount Pass</div>|<div class="subtitle">@ Boogie54 Yokohama</div>|' \
+ -e 's#BLOCK6 | DISCOUNT PASS ¥2,500 → ¥2,000#BLOCK6 | 9/26 (SAT) @ Boogie54 Yokohama#' \
+ -e '/<section class="coupon"/,/<\/section>/d' \
+ -e '/rule-after-pass/d' \
+ -e '/rule-after-clock/d' \
+ -e '/<section class="clock"/,/<\/section>/d' \
+ -e "s|{{GA4_ID}}|${GA4_ID}|g" \
+ -e "s|{{BASE_URL}}|${BASE_URL}|g" \
+ -e "s|{{OG_IMAGE}}|${BASE_URL}/ogp.jpg|g" \
+ -e 's|{{LOGO_SRC}}|logo_glow.png|g' \
+ -e 's|{{GROUP_NOTE}}||g' \
+ -e 's|{{BAND_NOTE}}||g' \
+ -e 's|{{NAME_CLASS}}||g' \
+ -e '/{{LINKS}}/{' -e 'r _links.html' -e 'd' -e '}' \
+ _template_discount.html > index.html
+echo "wrote  index.html"
+
 
 generate() {
   local dj="$1"
@@ -106,7 +107,7 @@ generate() {
       -e "s|{{GA4_ID}}|${GA4_ID}|g" \
       -e "s|{{BASE_URL}}|${BASE_URL}|g" \
       -e "s|{{OG_IMAGE}}|${BASE_URL}/og/${dir}.jpg|g" \
-      -e 's|{{LOGO_SRC}}|../logo.png|g' \
+      -e 's|{{LOGO_SRC}}|../logo_glow.png|g' \
       -e "s|{{GROUP_NOTE}}|${group_note}|g" \
       -e "s|{{BAND_NOTE}}|${band_note}|g" \
       -e '/{{LINKS}}/d' \
@@ -130,12 +131,12 @@ done
 {
   echo "# BLOCK6 — パスURL一覧"
   echo
-  echo "9/26 (SAT) @ Boogie54 Yokohama。配布者別のパスURL。ルートはイベント案内のみ（パスなし）。"
+  echo "9/26 (SAT) @ Boogie54 Yokohama。配布者別のパスURL。ルートはイベント案内+LINKS（パス本体なし・UEの2000円パスへのリンクあり）。"
   echo "チケットの地色は受付で渡すリストバンドの色と同じ（当日客=グリーンはバンドのみ）。"
   echo
   echo "## URL一覧"
   echo
-  echo "**ルート（イベント案内のみ）:** ${BASE_URL}/"
+  echo "**ルート（イベント案内+LINKS・IG bio の飛び先・UEパスへのリンク）:** ${BASE_URL}/"
   echo
   echo "**2000円ゲスト（イエロー・¥2,500 → ¥2,000）:**"
   echo
