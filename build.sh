@@ -21,6 +21,8 @@ GA4_ID="G-4N9ENSKWVH"
 # "表示名|スラッグ"
 DJS=("UE|ue" "P-KI|pki" "FUMIYA|fumiya" "なおと↯まふぃあ|naoto" "FU-SE|fuse" "yunkmr|yunkmr" "YUUKI|yuuki" "KAZUKI|kazuki" "KOUICHI|kouichi")
 FREE_DJS=("UE|ue")
+# ディスカウントのみ（-sp を作らない配布者）: BLOCK6 の Instagram(@block6_boogie54)配布用
+DISC_ONLY_DJS=("BLOCK6|block6")
 
 # _template_artist.html を discount 版から派生させる
 sed \
@@ -120,6 +122,12 @@ for entry in "${DJS[@]}"; do
   slug="${entry##*|}"
   generate "$dj" "$slug" "_template_discount.html" "$disc_map" "$GROUP_NOTE_DISCOUNT" "$BAND_NOTE_DISCOUNT"
   generate "$dj" "${slug}-sp" "_template_artist.html" "$artist_map" "$GROUP_NOTE_ARTIST" "$BAND_NOTE_ARTIST"
+done
+
+for entry in "${DISC_ONLY_DJS[@]}"; do
+  dj="${entry%%|*}"
+  slug="${entry##*|}"
+  generate "$dj" "$slug" "_template_discount.html" "$disc_map" "$GROUP_NOTE_DISCOUNT" "$BAND_NOTE_DISCOUNT"
 done
 
 for entry in "${FREE_DJS[@]}"; do
