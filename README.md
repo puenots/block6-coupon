@@ -21,6 +21,7 @@
 | KAZUKI | https://block6.djue.me/kazuki/ |
 | KOUICHI | https://block6.djue.me/kouichi/ |
 | BLOCK6 | https://block6.djue.me/block6/ |
+| BOOGIE54 | https://block6.djue.me/boogie54/ |
 
 **関係者（ブルー・¥2,500 → ¥1,000・1枚で5名まで）:**
 
