@@ -1,12 +1,12 @@
 #!/bin/bash
 # BLOCK6 パスページを生成する。
-# - 2000円ゲスト / イエロー (¥2,500→¥2,000)    : _template_discount.html → ${slug}/
-# - 関係者 / ブルー (¥2,500→¥1,000)            : _template_artist.html   → ${slug}-sp/
-# - フリー / ピンク (FREE・UEのみ)              : _template_free.html     → ${slug}-free/
+# - 2000円ゲスト / ブルー (¥2,500→¥2,000)    : _template_discount.html → ${slug}/
+# - 関係者 / グリーン (¥2,500→¥1,000)            : _template_artist.html   → ${slug}-sp/
+# - フリー / オレンジ (FREE・UEのみ)              : _template_free.html     → ${slug}-free/
 # - ルート (案内+LINKS・パス本体なし・UEパスへのリンク): _template_discount.html から生成 → index.html
 # URLは読めるスラッグ固定（例: /ue/ と /ue-sp/）。独自ドメイン block6.djue.me で公開。
 # _template_artist.html / _template_free.html は _template_discount.html から派生生成する（正本は discount 側）。
-# チケットの地色は受付で渡すリストバンドの色と同期させている（イエロー/ブルー/ピンク。当日客=グリーンはバンドのみ）。
+# チケットの地色は受付で渡すリストバンドの色と同期させている（11/16 keiju: ¥2,000=ブルー/¥1,500=イエロー/¥1,000=グリーン/FREE=オレンジ。当日客=ピンクはバンドのみ）。
 
 set -euo pipefail
 
@@ -28,8 +28,8 @@ DISC_ONLY_DJS=("BLOCK6|block6" "BOOGIE54|boogie54")
 sed \
  -e 's|DISCOUNT PASS{{TITLE_SUFFIX}}|GUEST PASS{{TITLE_SUFFIX}}|' \
  -e 's|<div class="subtitle">Discount Pass</div>|<div class="subtitle">Guest Pass</div>|' \
- -e 's|--ticket-a: #f7d21e;|--ticket-a: #47b6f0;|' \
- -e 's|--ticket-b: #e6b900;|--ticket-b: #2391d6;|' \
+ -e 's|--ticket-a: #47b6f0;|--ticket-a: #3ecf6e;|' \
+ -e 's|--ticket-b: #2391d6;|--ticket-b: #22a852;|' \
  -e 's|<div class="coupon-value">¥2,000</div>|<div class="coupon-value">¥1,000</div>|' \
  -e 's|aria-label="ディスカウントパス">|aria-label="関係者パス">|' \
  -e 's|<div class="coupon-tag"></div>|<div class="coupon-tag">音楽関係者専用</div>|' \
@@ -38,12 +38,12 @@ sed \
 echo "wrote  _template_artist.html"
 
 # _template_special.html を discount 版から派生させる(STILL045 と同じ形・11/16 keiju)
-# スペシャル / オレンジ (¥2,500→¥1,500)・札なし・条件なし → ${slug}-1500/ 。¥1,000 の関係者パス(-sp)は UE だけ
+# スペシャル / イエロー (¥2,500→¥1,500)・札なし・条件なし → ${slug}-1500/ 。¥1,000 の関係者パス(-sp)は UE だけ
 sed \
  -e 's|DISCOUNT PASS{{TITLE_SUFFIX}}|SPECIAL PASS{{TITLE_SUFFIX}}|' \
  -e 's|<div class="subtitle">Discount Pass</div>|<div class="subtitle">Special Pass</div>|' \
- -e 's|--ticket-a: #f7d21e;|--ticket-a: #ff9a2e;|' \
- -e 's|--ticket-b: #e6b900;|--ticket-b: #f07a10;|' \
+ -e 's|--ticket-a: #47b6f0;|--ticket-a: #f7d21e;|' \
+ -e 's|--ticket-b: #2391d6;|--ticket-b: #e6b900;|' \
  -e 's|<div class="coupon-value">¥2,000</div>|<div class="coupon-value">¥1,500</div>|' \
  -e 's|aria-label="ディスカウントパス">|aria-label="スペシャルパス">|' \
  -e 's@BLOCK6 | DISCOUNT PASS ¥2,500 → ¥2,000@BLOCK6 | SPECIAL PASS ¥2,500 → ¥1,500@' \
@@ -54,8 +54,8 @@ echo "wrote  _template_special.html"
 sed \
  -e 's|DISCOUNT PASS{{TITLE_SUFFIX}}|FREE PASS{{TITLE_SUFFIX}}|' \
  -e 's|<div class="subtitle">Discount Pass</div>|<div class="subtitle">Free Pass</div>|' \
- -e 's|--ticket-a: #f7d21e;|--ticket-a: #ff6ab5;|' \
- -e 's|--ticket-b: #e6b900;|--ticket-b: #ef3f90;|' \
+ -e 's|--ticket-a: #47b6f0;|--ticket-a: #ff9a2e;|' \
+ -e 's|--ticket-b: #2391d6;|--ticket-b: #f07a10;|' \
  -e 's|<div class="coupon-value">¥2,000</div>|<div class="coupon-value">FREE</div>|' \
  -e 's|aria-label="ディスカウントパス">|aria-label="フリーパス">|' \
  -e 's|<div class="coupon-tag"></div>|<div class="coupon-tag">フリーゲスト（音楽関係者のみ）</div>|' \
@@ -77,10 +77,10 @@ GROUP_NOTE_SPECIAL=""
 GROUP_NOTE_FREE="1枚で3名まで有効"
 
 # リストバンド注記（チケット地色と同じ色のバンドを受付で渡す）。空文字なら .coupon-band:empty で非表示。
-BAND_NOTE_DISCOUNT="受付でイエローのリストバンドをお渡しします"
-BAND_NOTE_ARTIST="受付でブルーのリストバンドをお渡しします"
-BAND_NOTE_SPECIAL="受付でオレンジのリストバンドをお渡しします"
-BAND_NOTE_FREE="受付でピンクのリストバンドをお渡しします"
+BAND_NOTE_DISCOUNT="受付でブルーのリストバンドをお渡しします"
+BAND_NOTE_ARTIST="受付でグリーンのリストバンドをお渡しします"
+BAND_NOTE_SPECIAL="受付でイエローのリストバンドをお渡しします"
+BAND_NOTE_FREE="受付でオレンジのリストバンドをお渡しします"
 
 # ルートページ(IG bio の飛び先): パス本体は載せない(09-15 keiju)。イベント案内+LINKS欄(_links.html: Mixcloud/IG/会場/パス案内→UEのパス /ue/ へのリンク)。
 # カウントダウンは無し(09-13 keiju「カウントダウンいらない」)
@@ -159,13 +159,13 @@ done
   echo "# BLOCK6 — パスURL一覧"
   echo
   echo "11/28 (SAT) @ Boogie54 Yokohama。配布者別のパスURL。ルートはイベント案内+LINKS（パス本体なし・UEの2000円パスへのリンクあり）。"
-  echo "チケットの地色は受付で渡すリストバンドの色と同じ（当日客=グリーンはバンドのみ）。"
+  echo "チケットの地色は受付で渡すリストバンドの色と同じ（当日客=ピンクはバンドのみ）。"
   echo
   echo "## URL一覧"
   echo
   echo "**ルート（イベント案内+LINKS・IG bio の飛び先・UEパスへのリンク）:** ${BASE_URL}/"
   echo
-  echo "**2000円ゲスト（イエロー・¥2,500 → ¥2,000）:**"
+  echo "**2000円ゲスト（ブルー・¥2,500 → ¥2,000）:**"
   echo
   echo "| 配布者 | URL |"
   echo "|----|-----|"
@@ -173,7 +173,7 @@ done
     echo "| ${dj} | ${BASE_URL}/${dir}/ |"
   done < "$disc_map"
   echo
-  echo "**スペシャル（オレンジ・¥2,500 → ¥1,500・個別に渡す用）:**"
+  echo "**スペシャル（イエロー・¥2,500 → ¥1,500・個別に渡す用）:**"
   echo
   echo "| 配布者 | URL |"
   echo "|----|-----|"
@@ -181,7 +181,7 @@ done
     echo "| ${dj} | ${BASE_URL}/${dir}/ |"
   done < "$special_map"
   echo
-  echo "**関係者（ブルー・¥2,500 → ¥1,000・1枚で3名まで・UE のみ）:**"
+  echo "**関係者（グリーン・¥2,500 → ¥1,000・1枚で3名まで・UE のみ）:**"
   echo
   echo "| 配布者 | URL |"
   echo "|----|-----|"
@@ -189,7 +189,7 @@ done
     echo "| ${dj} | ${BASE_URL}/${dir}/ |"
   done < "$artist_map"
   echo
-  echo "**フリー（ピンク・FREE・音楽関係者のみ・1枚で3名まで）:**"
+  echo "**フリー（オレンジ・FREE・音楽関係者のみ・1枚で3名まで）:**"
   echo
   echo "| 配布者 | URL |"
   echo "|----|-----|"
