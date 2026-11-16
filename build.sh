@@ -19,7 +19,7 @@ BASE_URL="https://block6.djue.me"
 GA4_ID="G-4N9ENSKWVH"
 
 # "表示名|スラッグ"
-DJS=("UE|ue" "P-KI|pki" "FUMIYA|fumiya" "なおと↯まふぃあ|naoto" "FU-SE|fuse" "yunkmr|yunkmr" "YUUKI|yuuki" "KAZUKI|kazuki" "KOUICHI|kouichi")
+DJS=("UE|ue" "P-KI|pki" "FUMIYA|fumiya" "なおと↯まふぃあ|naoto" "FU-SE|fuse" "K.DA.B|kdab" "BAPE|bape" "yunkmr|yunkmr" "YUUKI|yuuki" "KAZUKI|kazuki" "KOUICHI|kouichi")
 FREE_DJS=("UE|ue")
 # ディスカウントのみ（-sp を作らない配布者）: BLOCK6 の Instagram(@block6_boogie54) / 店 Boogie54(@boogie54yokohama) 配布用
 DISC_ONLY_DJS=("BLOCK6|block6" "BOOGIE54|boogie54")
@@ -36,6 +36,19 @@ sed \
  -e 's@BLOCK6 | DISCOUNT PASS ¥2,500 → ¥2,000@BLOCK6 | GUEST PASS ¥2,500 → ¥1,000@' \
  _template_discount.html > _template_artist.html
 echo "wrote  _template_artist.html"
+
+# _template_special.html を discount 版から派生させる(STILL045 と同じ形・11/16 keiju)
+# スペシャル / オレンジ (¥2,500→¥1,500)・札なし・条件なし → ${slug}-1500/ 。¥1,000 の関係者パス(-sp)は UE だけ
+sed \
+ -e 's|DISCOUNT PASS{{TITLE_SUFFIX}}|SPECIAL PASS{{TITLE_SUFFIX}}|' \
+ -e 's|<div class="subtitle">Discount Pass</div>|<div class="subtitle">Special Pass</div>|' \
+ -e 's|--ticket-a: #f7d21e;|--ticket-a: #ff9a2e;|' \
+ -e 's|--ticket-b: #e6b900;|--ticket-b: #f07a10;|' \
+ -e 's|<div class="coupon-value">¥2,000</div>|<div class="coupon-value">¥1,500</div>|' \
+ -e 's|aria-label="ディスカウントパス">|aria-label="スペシャルパス">|' \
+ -e 's@BLOCK6 | DISCOUNT PASS ¥2,500 → ¥2,000@BLOCK6 | SPECIAL PASS ¥2,500 → ¥1,500@' \
+ _template_discount.html > _template_special.html
+echo "wrote  _template_special.html"
 
 # _template_free.html を discount 版から派生させる
 sed \
@@ -54,24 +67,27 @@ echo "wrote  _template_free.html"
 disc_map=$(mktemp)
 artist_map=$(mktemp)
 free_map=$(mktemp)
-trap 'rm -f "$disc_map" "$artist_map" "$free_map"' EXIT
+special_map=$(mktemp)
+trap 'rm -f "$disc_map" "$artist_map" "$free_map" "$special_map"' EXIT
 
 # 人数注記。空文字なら .coupon-group:empty で非表示になる。
 GROUP_NOTE_DISCOUNT=""
 GROUP_NOTE_ARTIST="1枚で3名まで有効"
+GROUP_NOTE_SPECIAL=""
 GROUP_NOTE_FREE="1枚で3名まで有効"
 
 # リストバンド注記（チケット地色と同じ色のバンドを受付で渡す）。空文字なら .coupon-band:empty で非表示。
 BAND_NOTE_DISCOUNT="受付でイエローのリストバンドをお渡しします"
 BAND_NOTE_ARTIST="受付でブルーのリストバンドをお渡しします"
+BAND_NOTE_SPECIAL="受付でオレンジのリストバンドをお渡しします"
 BAND_NOTE_FREE="受付でピンクのリストバンドをお渡しします"
 
 # ルートページ(IG bio の飛び先): パス本体は載せない(09-15 keiju)。イベント案内+LINKS欄(_links.html: Mixcloud/IG/会場/パス案内→UEのパス /ue/ へのリンク)。
 # カウントダウンは無し(09-13 keiju「カウントダウンいらない」)
 sed \
- -e 's|<title>BLOCK6 — DISCOUNT PASS{{TITLE_SUFFIX}}</title>|<title>BLOCK6 — 9/26 (SAT) @ Boogie54 Yokohama</title>|' \
+ -e 's|<title>BLOCK6 — DISCOUNT PASS{{TITLE_SUFFIX}}</title>|<title>BLOCK6 — 11/28 (SAT) @ Boogie54 Yokohama</title>|' \
  -e 's|<div class="subtitle">Discount Pass</div>|<div class="subtitle">@ Boogie54 Yokohama</div>|' \
- -e 's#BLOCK6 | DISCOUNT PASS ¥2,500 → ¥2,000#BLOCK6 | 9/26 (SAT) @ Boogie54 Yokohama#' \
+ -e 's#BLOCK6 | DISCOUNT PASS ¥2,500 → ¥2,000#BLOCK6 | 11/28 (SAT) @ Boogie54 Yokohama#' \
  -e '/<section class="coupon"/,/<\/section>/d' \
  -e '/rule-after-pass/d' \
  -e '/rule-after-clock/d' \
@@ -121,7 +137,10 @@ for entry in "${DJS[@]}"; do
   dj="${entry%%|*}"
   slug="${entry##*|}"
   generate "$dj" "$slug" "_template_discount.html" "$disc_map" "$GROUP_NOTE_DISCOUNT" "$BAND_NOTE_DISCOUNT"
-  generate "$dj" "${slug}-sp" "_template_artist.html" "$artist_map" "$GROUP_NOTE_ARTIST" "$BAND_NOTE_ARTIST"
+  generate "$dj" "${slug}-1500" "_template_special.html" "$special_map" "$GROUP_NOTE_SPECIAL" "$BAND_NOTE_SPECIAL"
+  if [ "$slug" = "ue" ]; then
+    generate "$dj" "${slug}-sp" "_template_artist.html" "$artist_map" "$GROUP_NOTE_ARTIST" "$BAND_NOTE_ARTIST"
+  fi
 done
 
 for entry in "${DISC_ONLY_DJS[@]}"; do
@@ -139,7 +158,7 @@ done
 {
   echo "# BLOCK6 — パスURL一覧"
   echo
-  echo "9/26 (SAT) @ Boogie54 Yokohama。配布者別のパスURL。ルートはイベント案内+LINKS（パス本体なし・UEの2000円パスへのリンクあり）。"
+  echo "11/28 (SAT) @ Boogie54 Yokohama。配布者別のパスURL。ルートはイベント案内+LINKS（パス本体なし・UEの2000円パスへのリンクあり）。"
   echo "チケットの地色は受付で渡すリストバンドの色と同じ（当日客=グリーンはバンドのみ）。"
   echo
   echo "## URL一覧"
@@ -154,7 +173,15 @@ done
     echo "| ${dj} | ${BASE_URL}/${dir}/ |"
   done < "$disc_map"
   echo
-  echo "**関係者（ブルー・¥2,500 → ¥1,000・1枚で5名まで）:**"
+  echo "**スペシャル（オレンジ・¥2,500 → ¥1,500・個別に渡す用）:**"
+  echo
+  echo "| 配布者 | URL |"
+  echo "|----|-----|"
+  while IFS=$'\t' read -r dj dir; do
+    echo "| ${dj} | ${BASE_URL}/${dir}/ |"
+  done < "$special_map"
+  echo
+  echo "**関係者（ブルー・¥2,500 → ¥1,000・1枚で3名まで・UE のみ）:**"
   echo
   echo "| 配布者 | URL |"
   echo "|----|-----|"
