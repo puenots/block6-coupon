@@ -13,7 +13,6 @@
 |----|-----|
 | UE | https://block6.djue.me/ue/ |
 | P-KI | https://block6.djue.me/pki/ |
-| FUMIYA | https://block6.djue.me/fumiya/ |
 | なおと↯まふぃあ | https://block6.djue.me/naoto/ |
 | FU-SE | https://block6.djue.me/fuse/ |
 | K.DA.B | https://block6.djue.me/kdab/ |
@@ -31,7 +30,6 @@
 |----|-----|
 | UE | https://block6.djue.me/ue-1500/ |
 | P-KI | https://block6.djue.me/pki-1500/ |
-| FUMIYA | https://block6.djue.me/fumiya-1500/ |
 | なおと↯まふぃあ | https://block6.djue.me/naoto-1500/ |
 | FU-SE | https://block6.djue.me/fuse-1500/ |
 | K.DA.B | https://block6.djue.me/kdab-1500/ |
