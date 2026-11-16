@@ -28,11 +28,11 @@
     --night: #000;
     --cream: #f4f4f2;
     --cream-dim: rgba(244, 244, 242, 0.62);
-    --lime: #cddf0f;
-    --lime-2: #cddf0f;
+    --lime: #ccbcfc;
+    --lime-2: #ccbcfc;
     --ticket-a: #3ecf6e;
     --ticket-b: #22a852;
-    --hairline: rgba(205, 223, 15, 0.45);
+    --hairline: rgba(204, 188, 252, 0.45);
   }
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; }
@@ -43,8 +43,8 @@
     font-family: "DM Sans", "Noto Sans JP", system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     background-image:
-      radial-gradient(circle at 85% -5%, rgba(205, 223, 15, 0.22) 0%, transparent 42%),
-      radial-gradient(circle at 10% 110%, rgba(205, 223, 15, 0.08) 0%, transparent 45%);
+      radial-gradient(circle at 85% -5%, rgba(204, 188, 252, 0.22) 0%, transparent 42%),
+      radial-gradient(circle at 10% 110%, rgba(204, 188, 252, 0.08) 0%, transparent 45%);
   }
   .wrap {
     max-width: 420px;
@@ -252,8 +252,8 @@
     animation: glow 1.6s ease-in-out infinite;
   }
   @keyframes glow {
-    0%, 100% { text-shadow: 0 0 6px rgba(205, 223, 15, 0.25); }
-    50% { text-shadow: 0 0 26px rgba(205, 223, 15, 0.75); }
+    0%, 100% { text-shadow: 0 0 6px rgba(204, 188, 252, 0.25); }
+    50% { text-shadow: 0 0 26px rgba(204, 188, 252, 0.75); }
   }
   .clock-date {
     font-family: "Noto Sans JP", sans-serif;
@@ -355,8 +355,8 @@
     background: rgba(255, 255, 255, 0.03);
     transition: background .15s, border-color .15s;
   }
-  .link-btn:hover, .link-btn:active { background: rgba(205, 223, 15, 0.12); border-color: var(--lime-2); }
-  .link-btn.primary { border-color: var(--lime-2); background: rgba(205, 223, 15, 0.10); }
+  .link-btn:hover, .link-btn:active { background: rgba(204, 188, 252, 0.12); border-color: var(--lime-2); }
+  .link-btn.primary { border-color: var(--lime-2); background: rgba(204, 188, 252, 0.10); }
   .link-main {
     font-family: "Anton", sans-serif;
     font-size: 15px;
