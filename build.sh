@@ -19,7 +19,7 @@ BASE_URL="https://block6.djue.me"
 GA4_ID="G-4N9ENSKWVH"
 
 # "表示名|スラッグ"
-DJS=("UE|ue" "P-KI|pki" "なおと↯まふぃあ|naoto" "FU-SE|fuse" "K.DA.B|kdab" "BAPE|bape" "yunkmr|yunkmr" "YUUKI|yuuki" "KAZUKI|kazuki" "KOUICHI|kouichi")
+DJS=("UE|ue" "P-KI|pki" "なおと↯まふぃあ|naoto" "FU-SE|fuse" "K.DA.B|kdab" "BAPE|bape" "TAKEDA|takeda" "yunkmr|yunkmr" "YUUKI|yuuki" "KAZUKI|kazuki" "KOUICHI|kouichi")
 FREE_DJS=("UE|ue")
 # ディスカウントのみ（-sp を作らない配布者）: BLOCK6 の Instagram(@block6_boogie54) / 店 Boogie54(@boogie54yokohama) 配布用
 DISC_ONLY_DJS=("BLOCK6|block6" "BOOGIE54|boogie54")

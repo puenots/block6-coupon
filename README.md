@@ -17,6 +17,7 @@
 | FU-SE | https://block6.djue.me/fuse/ |
 | K.DA.B | https://block6.djue.me/kdab/ |
 | BAPE | https://block6.djue.me/bape/ |
+| TAKEDA | https://block6.djue.me/takeda/ |
 | yunkmr | https://block6.djue.me/yunkmr/ |
 | YUUKI | https://block6.djue.me/yuuki/ |
 | KAZUKI | https://block6.djue.me/kazuki/ |
@@ -34,6 +35,7 @@
 | FU-SE | https://block6.djue.me/fuse-1500/ |
 | K.DA.B | https://block6.djue.me/kdab-1500/ |
 | BAPE | https://block6.djue.me/bape-1500/ |
+| TAKEDA | https://block6.djue.me/takeda-1500/ |
 | yunkmr | https://block6.djue.me/yunkmr-1500/ |
 | YUUKI | https://block6.djue.me/yuuki-1500/ |
 | KAZUKI | https://block6.djue.me/kazuki-1500/ |
