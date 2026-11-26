@@ -74,7 +74,7 @@ trap 'rm -f "$disc_map" "$artist_map" "$free_map" "$special_map"' EXIT
 GROUP_NOTE_DISCOUNT=""
 GROUP_NOTE_ARTIST="1枚で3名まで有効"
 GROUP_NOTE_SPECIAL=""
-GROUP_NOTE_FREE="1枚で3名まで有効"
+GROUP_NOTE_FREE="1枚で2名まで有効"
 
 # リストバンド注記（チケット地色と同じ色のバンドを受付で渡す）。空文字なら .coupon-band:empty で非表示。
 BAND_NOTE_DISCOUNT="受付でブルーのリストバンドをお渡しします"
@@ -189,7 +189,7 @@ done
     echo "| ${dj} | ${BASE_URL}/${dir}/ |"
   done < "$artist_map"
   echo
-  echo "**フリー（オレンジ・FREE・音楽関係者のみ・1枚で3名まで）:**"
+  echo "**フリー（オレンジ・FREE・音楽関係者のみ・1枚で2名まで）:**"
   echo
   echo "| 配布者 | URL |"
   echo "|----|-----|"
