@@ -1,0 +1,539 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:title" content="BLOCK6 | 20代 FREE PASS（20代はエントランス無料）">
+<meta property="og:description" content="リンクを開いて入口で見せるだけ。11/28 (SAT) 18:00 – LATE @ Boogie54 Yokohama — HIP-HOP / R&B / REGGAE">
+<meta property="og:type" content="website">
+<meta property="og:image" content="{{OG_IMAGE}}">
+<meta name="twitter:card" content="summary_large_image">
+<title>BLOCK6 — 20代 FREE PASS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:wght@400;500;700&family=Noto+Sans+JP:wght@400;700;800;900&display=swap" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id={{GA4_ID}}"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  if ("{{GA4_ID}}".indexOf("G-") === 0) {
+    gtag("js", new Date());
+    gtag("config", "{{GA4_ID}}");
+  }
+</script>
+<style>
+  :root {
+    --night: #000;
+    --cream: #f4f4f2;
+    --cream-dim: rgba(244, 244, 242, 0.62);
+    --lime: #ccbcfc;
+    --lime-2: #ccbcfc;
+    --ticket-a: #ff9a2e;
+    --ticket-b: #f07a10;
+    --hairline: rgba(204, 188, 252, 0.45);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    min-height: 100vh;
+    background: var(--night);
+    color: var(--cream);
+    font-family: "DM Sans", "Noto Sans JP", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    background-image:
+      radial-gradient(circle at 85% -5%, rgba(204, 188, 252, 0.22) 0%, transparent 42%),
+      radial-gradient(circle at 10% 110%, rgba(204, 188, 252, 0.08) 0%, transparent 45%);
+  }
+  .wrap {
+    max-width: 420px;
+    margin: 0 auto;
+    padding: 26px 28px 26px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .title { margin: 0; }
+  /* 後光は logo_glow.png に焼き込み済み(logo.png + drop-shadow 22px を Puppeteer で事前描画・余白200/750)。
+     CSS filter: drop-shadow を <img> に掛けると Instagram アプリ内ブラウザで初回描画が四角い影になるため使わない。
+     幅・負マージンは、ロゴ本体の見た目サイズ/位置が旧 min(64vw,250px) と同じになる値。 */
+  .logo {
+    --lw: min(64vw, 250px);
+    display: block;
+    width: calc(var(--lw) * 1150 / 750);
+    max-width: none;
+    margin: calc(var(--lw) * -200 / 750) auto;
+  }
+  .subtitle {
+    font-family: "DM Sans", sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 7px;
+    text-indent: 7px;
+    color: var(--cream);
+    margin-top: 14px;
+    text-transform: uppercase;
+  }
+  .rule {
+    width: 100%;
+    height: 1px;
+    background: var(--hairline);
+    margin: 18px 0;
+  }
+  .label {
+    font-family: "DM Sans", sans-serif;
+    font-weight: 500;
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-indent: 4px;
+    color: var(--cream-dim);
+    text-transform: uppercase;
+  }
+
+  .coupon {
+    width: 100%;
+    background: linear-gradient(135deg, var(--ticket-a) 0%, var(--ticket-b) 100%);
+    border-radius: 16px;
+    padding: 16px 20px 18px;
+    position: relative;
+    box-shadow: 0 10px 34px rgba(0, 0, 0, 0.45);
+  }
+  .coupon .label { color: rgba(0, 0, 0, 0.7); }
+  .invited-name {
+    display: block;
+    font-family: "Anton", sans-serif;
+    font-weight: 400;
+    font-size: clamp(30px, 10vw, 44px);
+    line-height: 1.1;
+    letter-spacing: 2px;
+    color: #000;
+    margin-top: 2px;
+    white-space: nowrap;
+  }
+  /* 長い名前（日本語7文字など）は少し小さくして1行に収める */
+  .invited-name.long {
+    font-size: clamp(26px, 8.4vw, 38px);
+    letter-spacing: 1px;
+  }
+  .coupon-date {
+    font-family: "DM Sans", sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 1.5px;
+    color: #000;
+    margin-top: 7px;
+    font-variant-numeric: lining-nums;
+    font-feature-settings: "lnum" 1;
+  }
+  .coupon-date .valid {
+    font-family: "Noto Sans JP", sans-serif;
+    font-weight: 800;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    margin-left: 7px;
+    padding: 2px 8px;
+    border: 1.5px solid rgba(0, 0, 0, 0.55);
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+  .coupon-divider {
+    border-top: 2px dashed rgba(0, 0, 0, 0.45);
+    margin: 14px -20px 12px;
+    position: relative;
+  }
+  .coupon-divider::before, .coupon-divider::after {
+    content: "";
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    background: var(--night);
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .coupon-divider::before { left: -11px; }
+  .coupon-divider::after { right: -11px; }
+  .coupon-tag:empty { display: none; }
+  .coupon-tag {
+    display: inline-block;
+    font-family: "Noto Sans JP", sans-serif;
+    font-weight: 900;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-indent: 3px;
+    color: var(--lime);
+    background: var(--night);
+    padding: 4px 16px;
+    border-radius: 999px;
+    margin-bottom: 8px;
+  }
+  .coupon-was {
+    font-family: "DM Sans", sans-serif;
+    font-weight: 700;
+    font-size: 17px;
+    color: rgba(0, 0, 0, 0.6);
+    text-decoration: line-through;
+    text-decoration-thickness: 2px;
+    margin-top: 6px;
+  }
+  .coupon-value {
+    font-family: "Anton", sans-serif;
+    font-weight: 400;
+    font-size: clamp(56px, 17vw, 76px);
+    line-height: 1;
+    color: #000;
+    letter-spacing: 2px;
+    margin-top: 2px;
+    font-variant-numeric: lining-nums;
+    font-feature-settings: "lnum" 1;
+  }
+  .coupon-sub {
+    font-family: "Noto Sans JP", sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.9);
+    margin-top: 10px;
+    letter-spacing: 1px;
+    line-height: 1.7;
+  }
+  .coupon-sub small {
+    display: block;
+    font-weight: 500;
+    font-size: 11px;
+    color: rgba(0, 0, 0, 0.8);
+    letter-spacing: 0.5px;
+    line-height: 1.6;
+    margin-top: 5px;
+  }
+  .coupon-sub small strong {
+    font-weight: 900;
+    color: #000;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.35);
+  }
+
+  .coupon-group:empty { display: none; }
+  .coupon-group {
+    font-family: "Noto Sans JP", sans-serif;
+    font-weight: 800;
+    font-size: 12.5px;
+    letter-spacing: 1px;
+    color: #000;
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1.5px dotted rgba(0, 0, 0, 0.4);
+  }
+  .coupon-band:empty { display: none; }
+  .coupon-band {
+    font-family: "Noto Sans JP", sans-serif;
+    font-weight: 900;
+    font-size: 12.5px;
+    letter-spacing: 1px;
+    color: #000;
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1.5px dotted rgba(0, 0, 0, 0.4);
+  }
+
+  .clock-time {
+    font-family: "Anton", sans-serif;
+    font-weight: 400;
+    font-size: clamp(26px, 8vw, 34px);
+    line-height: 1;
+    color: var(--cream);
+    margin-top: 6px;
+    letter-spacing: 2px;
+    font-variant-numeric: tabular-nums lining-nums;
+    font-feature-settings: "lnum" 1, "tnum" 1;
+  }
+  .clock-time.live {
+    color: var(--lime-2);
+    animation: glow 1.6s ease-in-out infinite;
+  }
+  @keyframes glow {
+    0%, 100% { text-shadow: 0 0 6px rgba(204, 188, 252, 0.25); }
+    50% { text-shadow: 0 0 26px rgba(204, 188, 252, 0.75); }
+  }
+  .clock-date {
+    font-family: "Noto Sans JP", sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    color: var(--cream-dim);
+    margin-top: 6px;
+    letter-spacing: 1px;
+  }
+
+  .event-date {
+    font-family: "Anton", sans-serif;
+    font-weight: 400;
+    font-size: 24px;
+    letter-spacing: 2px;
+    font-variant-numeric: lining-nums;
+    font-feature-settings: "lnum" 1;
+    margin-top: 4px;
+  }
+  .event-date .accent { color: var(--lime-2); }
+  .event-meta {
+    font-family: "Noto Sans JP", sans-serif;
+    font-size: 12px;
+    margin-top: 8px;
+    color: var(--cream-dim);
+    letter-spacing: 0.5px;
+    line-height: 1.8;
+  }
+  .event-meta a {
+    color: var(--cream);
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    text-underline-offset: 3px;
+  }
+  .event-door {
+    font-family: "Noto Sans JP", sans-serif;
+    font-weight: 800;
+    font-size: 13px;
+    color: var(--cream);
+    margin-top: 8px;
+    letter-spacing: 0.5px;
+  }
+  .event-door .accent { color: var(--lime-2); }
+
+  .lineup {
+    width: 100%;
+    margin-top: 2px;
+  }
+  .lineup-row {
+    margin-top: 12px;
+  }
+  .lineup-names {
+    font-family: "Anton", sans-serif;
+    font-weight: 400;
+    font-size: 17px;
+    letter-spacing: 1.5px;
+    color: var(--cream);
+    margin-top: 3px;
+    line-height: 1.5;
+  }
+  .music-line {
+    font-family: "DM Sans", "Noto Sans JP", sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    color: var(--lime-2);
+    margin-top: 3px;
+    line-height: 1.8;
+  }
+  .crew-line {
+    font-family: "DM Sans", "Noto Sans JP", sans-serif;
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 1px;
+    color: var(--cream-dim);
+    margin-top: 3px;
+    line-height: 1.8;
+  }
+
+
+  .links {
+    width: 100%;
+    margin-top: 6px;
+  }
+  .links .label { margin-bottom: 10px; }
+  .link-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+    margin-top: 10px;
+    padding: 13px 16px;
+    border: 1px solid var(--hairline);
+    border-radius: 12px;
+    color: var(--cream);
+    text-decoration: none;
+    text-align: left;
+    background: rgba(255, 255, 255, 0.03);
+    transition: background .15s, border-color .15s;
+  }
+  .link-btn:hover, .link-btn:active { background: rgba(204, 188, 252, 0.12); border-color: var(--lime-2); }
+  .link-btn.primary { border-color: var(--lime-2); background: rgba(204, 188, 252, 0.10); }
+  .link-main {
+    font-family: "Anton", sans-serif;
+    font-size: 15px;
+    letter-spacing: 1.5px;
+    line-height: 1.2;
+  }
+  .link-sub {
+    font-family: "DM Sans", "Noto Sans JP", sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    color: var(--cream-dim);
+    margin-top: 3px;
+  }
+  .link-arrow { color: var(--lime-2); font-size: 16px; flex: none; }
+  .pass-note {
+    font-family: "Noto Sans JP", sans-serif;
+    font-size: 11.5px;
+    line-height: 1.8;
+    color: var(--cream-dim);
+    margin: 14px 0 0;
+  }
+  .pass-note b { color: var(--cream); font-weight: 700; }
+  .pass-note .pass-link {
+    color: var(--lime-2);
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .tagline {
+    font-family: "DM Sans", sans-serif;
+    font-weight: 500;
+    font-size: 10px;
+    letter-spacing: 4px;
+    color: var(--cream-dim);
+    text-align: center;
+    text-transform: uppercase;
+    margin: 20px 0 0;
+  }
+  .tagline .star { color: var(--lime-2); }
+</style>
+</head>
+<body>
+  <main class="wrap">
+    <h1 class="title"><img class="logo" src="{{LOGO_SRC}}" alt="BLOCK6"></h1>
+    <div class="subtitle">20代 Free Pass</div>
+
+    <div class="rule"></div>
+
+    <section class="coupon" aria-label="20代フリーパス">
+      <div class="coupon-tag">20代エントランスフリー</div>
+      <div class="label">For</div>
+      <span class="invited-name{{NAME_CLASS}}">{{DJ_NAME}}</span>
+      <div class="coupon-date"><span id="ticket-date">2026.9.26 (SAT)</span><span class="valid">この日のみ有効</span></div>
+      <div class="coupon-divider"></div>
+      <div class="label">Door Charge</div>
+      <div class="coupon-was">¥2,500</div>
+      <div class="coupon-value">FREE</div>
+      <div class="coupon-sub">この画面を入口スタッフにお見せください<small>📷 エントランスは電波が入りません<br><strong>スクリーンショットを保存</strong>してお越しください</small></div>
+      <div class="coupon-group">{{GROUP_NOTE}}</div>
+      <div class="coupon-band">{{BAND_NOTE}}</div>
+    </section>
+
+    <div class="rule rule-after-pass"></div>
+
+    <section class="clock" aria-label="カウントダウン">
+      <div class="label">Countdown</div>
+      <div class="clock-time" id="cd-main">--</div>
+      <div class="clock-date" id="cd-sub">—</div>
+    </section>
+
+    <div class="rule rule-after-clock"></div>
+
+    <section class="event" aria-label="イベント情報">
+      <div class="event-date" id="event-date">2026 / <span class="accent">11 / 28</span> (SAT)</div>
+      <div class="event-meta">OPEN 18:00 – LATE NIGHT @ Boogie54 Yokohama<br><a href="https://www.google.com/maps/search/?api=1&query=%E6%A8%AA%E6%B5%9C%E5%B8%82%E4%B8%AD%E5%8C%BA%E9%95%B7%E8%80%85%E7%94%BA6-111" target="_blank" rel="noopener">📍 横浜市中区長者町6-111 B1F</a></div>
+      <div class="event-door">DOOR ¥2,500</div>
+      <div class="lineup">
+        <div class="lineup-row">
+          <div class="label">Guest DJ</div>
+          <div class="lineup-names">K.DA.B</div>
+        </div>
+        <div class="lineup-row">
+          <div class="label">DJs</div>
+          <div class="lineup-names">UE / P-KI / なおと↯まふぃあ<br>FU-SE / BAPE</div>
+        </div>
+        <div class="lineup-row">
+          <div class="label">Music</div>
+          <div class="music-line">HIP-HOP · R&amp;B · REGGAE</div>
+        </div>
+        <div class="lineup-row">
+          <div class="label">Photo / Food / Support</div>
+          <div class="crew-line">yunkmr ／ 祝 IWAI ／ Brookstar Stitch</div>
+        </div>
+      </div>
+    </section>
+
+{{LINKS}}
+    <p class="tagline"><span class="star">★</span> Boogie54 Yokohama <span class="star">★</span></p>
+  </main>
+
+<script>
+  (function () {
+    var subEl = document.getElementById("cd-sub");
+    var mainEl = document.getElementById("cd-main");
+    var ticketEl = document.getElementById("ticket-date");
+    var eventEl = document.getElementById("event-date");
+
+    // BLOCK6 は奇数月の第4土曜。開催が終わったら(翌朝6:00)次回に自動で切り替わる。
+    // 例外日程があれば OVERRIDES に "YYYY-MM-DD" を足す(その月の規則日より優先)。
+    var OVERRIDES = [];
+    var START_H = 18, END_H = 6; // 18:00 開始・翌 06:00 終了 (JST)
+
+    function jst(y, m, d, h) { // m: 1-12
+      return new Date(Date.UTC(y, m - 1, d, h - 9, 0, 0)).getTime();
+    }
+    function fourthSaturday(y, m) {
+      var dow = new Date(Date.UTC(y, m - 1, 1)).getUTCDay(); // 0=Sun
+      var first = 1 + ((6 - dow) + 7) % 7;
+      return first + 21;
+    }
+    function ruleDate(y, m) {
+      for (var i = 0; i < OVERRIDES.length; i++) {
+        var o = OVERRIDES[i].split("-");
+        if (+o[0] === y && +o[1] === m) return +o[2];
+      }
+      return fourthSaturday(y, m);
+    }
+    function nextEvent(now) {
+      var d = new Date(now + 9 * 3600000);
+      var y = d.getUTCFullYear(), m = d.getUTCMonth() + 1;
+      if (m % 2 === 0) { m += 1; if (m > 12) { m = 1; y += 1; } }
+      for (var k = 0; k < 12; k++) {
+        var day = ruleDate(y, m);
+        var start = jst(y, m, day, START_H);
+        var end = jst(y, m, day + 1, END_H);
+        if (now < end) return { y: y, m: m, d: day, start: start, end: end };
+        m += 2; if (m > 12) { m -= 12; y += 1; }
+      }
+    }
+    function dowLabel(y, m, d) {
+      return ["SUN","MON","TUE","WED","THU","FRI","SAT"][new Date(Date.UTC(y, m - 1, d)).getUTCDay()];
+    }
+    function pad(n) { return n < 10 ? "0" + n : "" + n; }
+
+    var ev = null;
+    function applyEvent(e) {
+      ev = e;
+      var w = dowLabel(e.y, e.m, e.d);
+      if (ticketEl) ticketEl.textContent = e.y + "." + e.m + "." + e.d + " (" + w + ")";
+      if (eventEl) eventEl.innerHTML = e.y + " / <span class=\"accent\">" + e.m + " / " + e.d + "</span> (" + w + ")";
+    }
+
+    function update() {
+      var now = Date.now();
+      if (!ev || now >= ev.end) applyEvent(nextEvent(now));
+      if (!subEl || !mainEl) return; // ルート(カウントダウン無し)でも切符日付/開催日は更新する
+      var label = ev.m + "/" + ev.d + " (" + dowLabel(ev.y, ev.m, ev.d) + ")";
+      if (now >= ev.start) {
+        subEl.textContent = label + " 18:00 – Late";
+        mainEl.textContent = "いま開催中！";
+        mainEl.classList.add("live");
+      } else {
+        var ms = ev.start - now;
+        var d = Math.floor(ms / 86400000);
+        var h = Math.floor((ms % 86400000) / 3600000);
+        var m = Math.floor((ms % 3600000) / 60000);
+        var s = Math.floor((ms % 60000) / 1000);
+        subEl.textContent = label + " 18:00 スタート";
+        mainEl.textContent = (d > 0 ? d + "日 " : "") + pad(h) + ":" + pad(m) + ":" + pad(s);
+        mainEl.classList.remove("live");
+      }
+    }
+
+    update();
+    setInterval(update, 1000);
+  })();
+</script>
+</body>
+</html>

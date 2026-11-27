@@ -63,6 +63,17 @@ sed \
  _template_discount.html > _template_free.html
 echo "wrote  _template_free.html"
 
+# 20代フリー(11/27 keiju): 配布者なし・URL 1つ(/20s/)。FREE と同じオレンジのバンド(どちらも ¥0)。身分証で年齢確認
+sed \
+ -e 's|FREE PASS{{TITLE_SUFFIX}}|20代 FREE PASS|' \
+ -e 's|<div class="subtitle">Free Pass</div>|<div class="subtitle">20代 Free Pass</div>|' \
+ -e 's|aria-label="フリーパス">|aria-label="20代フリーパス">|' \
+ -e 's|<div class="coupon-tag">フリーゲスト（音楽関係者のみ）</div>|<div class="coupon-tag">20代エントランスフリー</div>|' \
+ -e 's|<div class="label">Invited by</div>|<div class="label">For</div>|' \
+ -e 's@BLOCK6 | FREE PASS（音楽関係者のみ）@BLOCK6 | 20代 FREE PASS（20代はエントランス無料）@' \
+ _template_free.html > _template_20s.html
+echo "wrote  _template_20s.html"
+
 # (dj, slug) を1行ずつ書く一時ファイル
 disc_map=$(mktemp)
 artist_map=$(mktemp)
@@ -75,6 +86,7 @@ GROUP_NOTE_DISCOUNT=""
 GROUP_NOTE_ARTIST="1枚で3名まで有効"
 GROUP_NOTE_SPECIAL=""
 GROUP_NOTE_FREE="1枚で2名まで有効"
+GROUP_NOTE_20S="受付で年齢がわかる身分証をご提示ください"
 
 # リストバンド注記（チケット地色と同じ色のバンドを受付で渡す）。空文字なら .coupon-band:empty で非表示。
 BAND_NOTE_DISCOUNT="受付でブルーのリストバンドをお渡しします"
@@ -155,6 +167,11 @@ for entry in "${FREE_DJS[@]}"; do
   generate "$dj" "${slug}-free" "_template_free.html" "$free_map" "$GROUP_NOTE_FREE" "$BAND_NOTE_FREE"
 done
 
+# 20代フリー(配布者なし・1ページ)
+twenties_map=$(mktemp)
+trap 'rm -f "$disc_map" "$artist_map" "$free_map" "$special_map" "$twenties_map"' EXIT
+generate "20代" "20s" "_template_20s.html" "$twenties_map" "$GROUP_NOTE_20S" "$BAND_NOTE_FREE"
+
 {
   echo "# BLOCK6 — パスURL一覧"
   echo
@@ -196,6 +213,8 @@ done
   while IFS=$'\t' read -r dj dir; do
     echo "| ${dj} | ${BASE_URL}/${dir}/ |"
   done < "$free_map"
+  echo
+  echo "**20代フリー（オレンジ・FREE・配布者なし・身分証で年齢確認）:** ${BASE_URL}/20s/"
   echo
   echo "## ビルド"
   echo

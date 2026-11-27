@@ -53,6 +53,8 @@
 |----|-----|
 | UE | https://block6.djue.me/ue-free/ |
 
+**20代フリー（オレンジ・FREE・配布者なし・身分証で年齢確認）:** https://block6.djue.me/20s/
+
 ## ビルド
 
 ```bash
