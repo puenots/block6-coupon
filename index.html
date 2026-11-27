@@ -92,6 +92,12 @@
     text-transform: uppercase;
   }
 
+  /* 開催が終わったパス(PASS_EVENT の翌朝6:00以降)は灰色にして「終了しました」を出す */
+  .pass-ended { display: none; margin: 0 auto 14px; max-width: 420px; padding: 12px 16px; border: 2px solid #f4f3ef; border-radius: 12px; text-align: center; font-weight: 800; line-height: 1.6; }
+  .pass-ended small { display: block; font-weight: 500; opacity: .8; }
+  body.expired .pass-ended { display: block; }
+  body.expired .coupon { filter: grayscale(1); opacity: .4; }
+  body.expired .coupon-value { text-decoration: line-through; }
   .coupon {
     width: 100%;
     background: linear-gradient(135deg, var(--ticket-a) 0%, var(--ticket-b) 100%);
@@ -406,6 +412,7 @@
 
     <div class="rule"></div>
 
+    <div class="pass-ended" id="pass-ended">このパスは <span id="pass-ended-date"></span> で終了しました<small>次回のパスは DJ からお受け取りください</small></div>
 
 
 
@@ -499,6 +506,15 @@
     }
     function pad(n) { return n < 10 ? "0" + n : "" + n; }
 
+    // パスページは発行した回の日付で固定し、その回が終わったら終了表示にする(11/28 keiju: 前回の URL がそのまま使えてしまうため)。
+    // ルートは PASS_EVENT が空なので従来どおり次回へ自動で切り替わる。
+    var PASS_EVENT = "";
+    var passEv = null;
+    if (/^\d{4}-\d{2}-\d{2}$/.test(PASS_EVENT)) {
+      var pe = PASS_EVENT.split("-"), py = +pe[0], pm = +pe[1], pd = +pe[2];
+      passEv = { y: py, m: pm, d: pd, start: jst(py, pm, pd, START_H), end: jst(py, pm, pd + 1, END_H) };
+    }
+
     var ev = null;
     function applyEvent(e) {
       ev = e;
@@ -510,6 +526,15 @@
     function update() {
       var now = Date.now();
       if (!ev || now >= ev.end) applyEvent(nextEvent(now));
+      if (passEv) {
+        var pw = dowLabel(passEv.y, passEv.m, passEv.d);
+        if (ticketEl) ticketEl.textContent = passEv.y + "." + passEv.m + "." + passEv.d + " (" + pw + ")";
+        if (now >= passEv.end && !document.body.classList.contains("expired")) {
+          document.body.classList.add("expired");
+          var de = document.getElementById("pass-ended-date");
+          if (de) de.textContent = passEv.m + "/" + passEv.d + " (" + pw + ")";
+        }
+      }
       if (!subEl || !mainEl) return; // ルート(カウントダウン無し)でも切符日付/開催日は更新する
       var label = ev.m + "/" + ev.d + " (" + dowLabel(ev.y, ev.m, ev.d) + ")";
       if (now >= ev.start) {

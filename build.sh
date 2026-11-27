@@ -14,6 +14,10 @@ cd "$(dirname "$0")"
 
 BASE_URL="https://block6.djue.me"
 
+# このパスを発行した回(YYYY-MM-DD)。パスの日付はこの日で固定し、翌朝6:00以降は「終了しました」表示になる。
+# ⚠️ 次回(1/23〜)は URL も回ごとに分ける予定(例 /0123/ue/)。同じ URL で PASS_EVENT だけ変えると前回のリンクがまた使えてしまう。
+PASS_EVENT="2026-11-28"
+
 # GA4 測定ID。digtracks プロパティ (319283938) に相乗り。
 # レポート時は hostname = block6.djue.me で絞る（page_title に DJ 名とパス種別が入る）。
 GA4_ID="G-4N9ENSKWVH"
@@ -109,6 +113,7 @@ sed \
  -e "s|{{OG_IMAGE}}|${BASE_URL}/ogp.jpg|g" \
  -e 's|{{LOGO_SRC}}|logo_glow.png|g' \
  -e 's|{{GROUP_NOTE}}||g' \
+ -e 's|{{PASS_EVENT}}||g' \
  -e 's|{{BAND_NOTE}}||g' \
  -e 's|{{NAME_CLASS}}||g' \
  -e '/{{LINKS}}/{' -e 'r _links.html' -e 'd' -e '}' \
@@ -139,6 +144,7 @@ generate() {
       -e "s|{{OG_IMAGE}}|${BASE_URL}/og/${dir}.jpg|g" \
       -e 's|{{LOGO_SRC}}|../logo_glow.png|g' \
       -e "s|{{GROUP_NOTE}}|${group_note}|g" \
+      -e "s|{{PASS_EVENT}}|${PASS_EVENT}|g" \
       -e "s|{{BAND_NOTE}}|${band_note}|g" \
       -e '/{{LINKS}}/d' \
       "$template" > "${dir}/index.html"
